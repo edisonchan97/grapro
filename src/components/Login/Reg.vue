@@ -16,25 +16,25 @@
     <div class="container from-group">
       <div class="input-group col-xs-8 col-xs-offset-2 col-md-6 col-md-offset-3 ">
         <span class="input-group-addon glyphicon glyphicon-user" id=""></span>
-        <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+        <input type="text" class="form-control" placeholder="Username" v-model="username" aria-describedby="basic-addon1">
       </div>
       <div class="input-group col-xs-8 col-xs-offset-2 col-md-6 col-md-offset-3 ">
         <span class="input-group-addon glyphicon glyphicon-envelope" id=""></span>
-        <input type="text" class="form-control" placeholder="Email">
+        <input type="text" class="form-control" placeholder="Email" v-model="email">
       </div>
       <div class="input-group col-xs-8 col-xs-offset-2 col-md-6 col-md-offset-3 ">
         <span class="input-group-addon glyphicon glyphicon-phone" id=""></span>
-        <input type="text" class="form-control" placeholder="Mobile phone">
+        <input type="text" class="form-control" placeholder="Mobile phone" v-model="phone">
       </div>
       <div class="input-group col-xs-8 col-xs-offset-2 col-md-6 col-md-offset-3 ">
         <span class="input-group-addon glyphicon glyphicon-lock" id=""></span>
-        <input type="password" class="form-control" placeholder="Password">
+        <input type="password" class="form-control" placeholder="Password" v-model="pwd">
       </div>
       <div class="input-group col-xs-8 col-xs-offset-2 col-md-6 col-md-offset-3 ">
         <span class="input-group-addon glyphicon glyphicon-lock" id=""></span>
-        <input type="password" class="form-control" placeholder="Check Password">
+        <input type="password" class="form-control" placeholder="Check Password" v-model="pwd1">
       </div>
-      <button type="button" class="btn btn-primary" id="reg">注册</button>
+      <button type="button" class="btn btn-primary" id="reg" @click="reg()">注册</button>
       <router-link id="own-account" to="Login">已有账号！</router-link>
     </div>
     <grapro></grapro>  
@@ -44,15 +44,38 @@
 <script>
 import Grapro from "../../components/LittleComponents/Grapro"
 import UpPic from "../../components/LittleComponents/UpPic"
+import axios from "axios"
 export default {
   name: 'Reg',
   data () {
     return {
-      picSrc:""
+      picSrc:"",
+      username:"",
+      email:"",
+      pwd:"",
+      pwd1:"",
+      phone:"",
     }
   },
   components:{Grapro,UpPic},
   methods:{
+    reg:function(){
+      console.log()
+      axios({
+        method:'get',
+        url:'http://127.0.0.1/garpro/user/userReg',
+        params:{
+          username:username,
+          pwd:pwd,
+          email:email,
+          phone:phone,
+        }
+      }).then(res=>{
+        console.log(res.data)
+      }).catch(res=>{
+        console.log(error)
+      })
+    }
   }
 }
 </script>

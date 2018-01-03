@@ -3,8 +3,11 @@
   <!-- <img src="static/index-bg.jpg" alt="" id="index-bg"> -->
     <div class="container from-group">
       <h1 id="title">Welcome To Grapro</h1>
+      <!-- 显示头像开始 登陆过的会有头像的显示，存本地，或者在输入到账号名的存在的时候发请求显示-->
       <div class="input-group col-xs-8 col-xs-offset-2 col-md-6 col-md-offset-3" id="head-sculpture">
-          <span class="input-group-addon glyphicon glyphicon-camera" id=""></span>
+          <span class="input-group-addon glyphicon glyphicon-camera" id="">
+            <img :src='hisHead' alt="" title="你的头像" id="head-img">
+          </span>
       </div>
     </div>
     <div class="container from-group">
@@ -31,6 +34,7 @@ export default {
   name: 'Login',
   data () {
     return {
+      hisHead:"#" 
     }
   },
   components:{Grapro}
@@ -97,12 +101,13 @@ export default {
     bottom: 8rem;
     left: 40%;
   }
-/*  .up-head{
-    display: inline-block;
+  #head-img{
     width: 100px;
-    height: 100px;
-    text-decoration: none;
-  }*/
+    height:100px;
+    position: absolute;
+    left: 0px;
+    top: -1px;
+  }
   /*屏幕大于960px*/
   @media screen and (min-width: 960px) {
     #lost-password{
