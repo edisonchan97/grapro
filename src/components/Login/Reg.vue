@@ -65,10 +65,10 @@ export default {
         method:'get',
         url:'http://127.0.0.1/garpro/user/userReg',
         params:{
-          username:username,
-          pwd:pwd,
-          email:email,
-          phone:phone,
+          username:this.username,
+          pwd:this.pwd,
+          email:this.email,
+          phone:this.phone,
         }
       }).then(res=>{
         console.log(res.data)
