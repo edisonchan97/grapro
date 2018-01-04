@@ -13,13 +13,13 @@
     <div class="container from-group">
       <div class="input-group col-xs-8 col-xs-offset-2 col-md-6 col-md-offset-3 ">
         <span class="input-group-addon glyphicon glyphicon-user" id=""></span>
-        <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+        <input type="text" class="form-control" placeholder="Username" v-model="username" aria-describedby="basic-addon1">
       </div>
       <div class="input-group col-xs-8 col-xs-offset-2 col-md-6 col-md-offset-3 ">
         <span class="input-group-addon glyphicon glyphicon-lock" id=""></span>
-        <input type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
+        <input type="password" class="form-control" placeholder="Password" v-model="pwd" v-focus="password" aria-describedby="basic-addon1">
       </div>
-      <router-link to="/"><button type="button" class="btn btn-primary" id="login">登陆</button></router-link>
+      <button type="button" class="btn btn-primary" id="login" @click="login" >登陆</button>
       <router-link to="Reg"><button type="button" class="btn btn-primary" id="reg">注册</button></router-link>
       <a href="" id="lost-password">忘记密码?</a>
       <a href="" id="change-account">更换账号登陆</a>
@@ -29,15 +29,50 @@
 </template>
 
 <script>
+import axios from "axios"
 import Grapro from "../../components/LittleComponents/Grapro"
 export default {
   name: 'Login',
   data () {
     return {
-      hisHead:"#" 
+      hisHead:"#",
+      username:"",
+      pwd:"",
+      password:"" 
     }
   },
-  components:{Grapro}
+  components:{Grapro},
+  directives:{
+    focus: {
+      bind: function (el) {
+          el.focus();
+      }
+    }
+  },
+  methods:{
+    login:function(){
+      axios({
+        method:'get',
+        url:'http://127.0.0.1/garpro/user/userLogin',
+        params:{
+          username:this.username,
+          pwd:this.pwd
+        }
+      }).then(res=>{//注册成功返回'loginsuc'
+        console.log(res.data)
+        if(res.data=="loginsuc"){
+          this.$router.push({path:'/'})//跳转页面
+        }else{
+          this.password = true;
+          this.pwd ="";
+          this.password = false;
+          return;
+        }
+      }).catch(res=>{
+        console.log(error)
+      })
+    }
+  }
 }
 </script>
 

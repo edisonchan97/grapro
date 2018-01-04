@@ -1,6 +1,5 @@
 <template>
   <div class="forget-pwd">
-  <!-- <img src="static/index-bg.jpg" alt="" id="index-bg"> -->
     <div class="container from-group">
       <h1 id="title">Welcome To Grapro</h1>
     </div>

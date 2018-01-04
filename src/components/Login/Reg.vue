@@ -28,11 +28,11 @@
       </div>
       <div class="input-group col-xs-8 col-xs-offset-2 col-md-6 col-md-offset-3 ">
         <span class="input-group-addon glyphicon glyphicon-lock" id=""></span>
-        <input type="password" class="form-control" placeholder="Password" v-model="pwd">
+        <input type="password" class="form-control" placeholder="Password" v-model="pwd" v-focus="passwd">
       </div>
       <div class="input-group col-xs-8 col-xs-offset-2 col-md-6 col-md-offset-3 ">
         <span class="input-group-addon glyphicon glyphicon-lock" id=""></span>
-        <input type="password" class="form-control" placeholder="Check Password" v-model="pwd1">
+        <input type="password" class="form-control" placeholder="Check Password" v-model="pwd1" >
       </div>
       <button type="button" class="btn btn-primary" id="reg" @click="reg()">注册</button>
       <router-link id="own-account" to="Login">已有账号！</router-link>
@@ -55,12 +55,19 @@ export default {
       pwd:"",
       pwd1:"",
       phone:"",
+      passwd:'',
+    }
+  },
+  directives: {
+    focus: {
+      bind: function (el) {
+          el.focus();
+      }
     }
   },
   components:{Grapro,UpPic},
   methods:{
     reg:function(){
-      console.log()
       axios({
         method:'get',
         url:'http://127.0.0.1/garpro/user/userReg',
@@ -70,8 +77,17 @@ export default {
           email:this.email,
           phone:this.phone,
         }
-      }).then(res=>{
+      }).then(res=>{//注册成功返回'regsuc'
         console.log(res.data)
+        if(res.data=="regsuc"){
+          this.$router.replace({path:'/Login'})//跳转页面
+        }else{
+          this.passwd = true;
+          this.pwd = "";
+          this.pwd1 = "";
+          this.passwd = false;
+          return;
+        }
       }).catch(res=>{
         console.log(error)
       })

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import axios from 'axios'
 import IndexHeader from '@/components/Header/IndexHeader'
 import Reg from '@/components/Login/Reg'
 import Login from '@/components/Login/Login'
