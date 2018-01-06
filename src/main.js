@@ -5,9 +5,13 @@ import App from './App'
 import router from './router'
 import $ from 'jquery'
 import axios from 'axios'
+import iView from 'iview';
+import 'iview/dist/styles/iview.css'; 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.min'
 
+Vue.use(iView);
+axios.defaults.withCredentials=true;
 Vue.config.productionTip = false
 new Vue({
   el: '#app',

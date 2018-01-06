@@ -1,29 +1,24 @@
 <template>
-  <div class="forget-pwd">
+  <div class="reset-pwd">
     <div class="container from-group">
       <h1 id="title">Welcome To Grapro</h1>
     </div>
     <div class="container from-group">
       <div class="input-group col-xs-8 col-xs-offset-2 col-md-6 col-md-offset-3 ">
         <span class="input-group-addon glyphicon glyphicon-envelope" id=""></span>
-        <input type="text" class="form-control" placeholder="输入注册邮箱" v-model="mailAddress" aria-describedby="basic-addon1">
+        <input type="text" class="form-control" disabled v-model="userEmail" aria-describedby="basic-addon1">
       </div>
       <div class="input-group col-xs-8 col-xs-offset-2 col-md-6 col-md-offset-3 ">
-        <span class="input-group-addon glyphicon glyphicon-qrcode" id=""></span>
-        <input type="text" class="form-control" placeholder="输入下方验证码" v-model="captchaCode" aria-describedby="basic-addon1">
+        <span class="input-group-addon glyphicon glyphicon-lock" id=""></span>
+        <input type="text" class="form-control" placeholder="Password" v-model="pwd" aria-describedby="basic-addon1">
+      </div>
+      <div class="input-group col-xs-8 col-xs-offset-2 col-md-6 col-md-offset-3 ">
+        <span class="input-group-addon glyphicon glyphicon-lock" id=""></span>
+        <input type="text" class="form-control" placeholder="Password Again" v-model="pwd1" aria-describedby="basic-addon1">
       </div> 
     <Row class="Row">
-      <i-col span="6" offset="4" id="code">
-      <!-- 验证码: -->
-      <img :src="captchaUrl" alt="" id="vcode">
-      </i-col>
-      <i-col span="6" offset="4">
-        <i-button type="primary" icon="refresh" @click="changeCaptcha" >换一个</i-button>
-      </i-col> 
-    </Row>
-    <Row class="Row">
       <i-col span="6" offset="9">
-        <i-button type="success" long @click="checkCaptcha">确认提交</i-button>
+        <i-button type="primary" long @click="resetPwd">重置密码</i-button>
       </i-col>
     </Row> 
     </div> 
@@ -38,17 +33,17 @@ export default {
   name: 'Login',
   data () {
     return {
-    captchaUrl:"http://127.0.0.1/garpro/user/captcha",
-    captchaCode:"",
-    mailAddress:""
+      pwd1:"",
+      pwd:"",
+      userEmail:""
     }
   },
   components:{Grapro},
   methods:{
-    changeCaptcha:function() {
-    this.captchaUrl = 'http://127.0.0.1/garpro/user/captcha/'+Math.random();
+    resetPwd:function() {
+    
     },
-    checkCaptcha:function(){
+    resetPwd:function(){
       axios({
         type:"get",
         url:"http://127.0.0.1/garpro/user/checkCaptcha",
@@ -78,12 +73,6 @@ export default {
   }
   .input-group{
     margin-bottom: 10px;
-  }
-  #code{
-    font-size: 1.5rem;
-  }
-  #vcode{
-    display: inline-block;
   }
   .Row{
     margin-bottom: 1rem;

@@ -4,6 +4,8 @@ import axios from 'axios'
 import IndexHeader from '@/components/Header/IndexHeader'
 import Reg from '@/components/Login/Reg'
 import Login from '@/components/Login/Login'
+import ForgetPwd from '@/components/Login/ForgetPwd'
+import ResetPwd from '@/components/Login/ResetPwd'
 import InputLogin from '@/components/LittleComponents/InputLogin'
 import Grapro from '@/components/LittleComponents/Grapro'
 import UpPic from '@/components/LittleComponents/UpPic'
@@ -28,6 +30,16 @@ export default new Router({
       path: '/Login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/ForgetPwd',
+      name: 'ForgetPwd',
+      component: ForgetPwd
+    },
+    {
+      path: '/ResetPwd',
+      name: 'ResetPwd',
+      component: ResetPwd
     },
     {
       path: '/BgHead',
