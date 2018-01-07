@@ -21,7 +21,7 @@
       </div>
       <button type="button" class="btn btn-primary" id="login" @click="login" >登陆</button>
       <router-link to="Reg"><button type="button" class="btn btn-primary" id="reg">注册</button></router-link>
-      <a href="" id="lost-password">忘记密码?</a>
+      <router-link to="ForgetPwd" id="lost-password">忘记密码?</router-link>
       <a href="" id="change-account">更换账号登陆</a>
     </div>
     <grapro></grapro>  

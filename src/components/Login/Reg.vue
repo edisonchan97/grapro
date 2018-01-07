@@ -78,9 +78,9 @@ export default {
           phone:this.phone,
         }
       }).then(res=>{//注册成功返回'regsuc'
-        console.log(res.data)
+        // console.log(res.data)
         if(res.data=="regsuc"){
-          this.$router.replace({path:'/Login'})//跳转页面
+          this.$router.push({path:'/Login'})//跳转页面
         }else{
           this.passwd = true;
           this.pwd = "";
@@ -89,7 +89,7 @@ export default {
           return;
         }
       }).catch(res=>{
-        console.log(error)
+        // console.log(error)
       })
     }
   }

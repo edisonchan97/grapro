@@ -35,24 +35,49 @@ export default {
     return {
       pwd1:"",
       pwd:"",
-      userEmail:""
+      userEmail:"",
+      time:""
     }
   },
   components:{Grapro},
-  methods:{
-    resetPwd:function() {
-    
-    },
-    resetPwd:function(){
-      axios({
-        type:"get",
-        url:"http://127.0.0.1/garpro/user/checkCaptcha",
-        params:{
-          captchaCode:this.captchaCode,
-          mailAddress:this.mailAddress,
-        }
-      }).then(res=>{
+  mounted:function() {
+    var emailInfo = location.hash;
+    var qindex = emailInfo.indexOf("?");
+    var eindex = emailInfo.indexOf("=");
+    this.userEmail = emailInfo.substring(qindex+1,eindex).replace("%40","@");
+    var time = emailInfo.substring(eindex+1);
+    this.time = time;
+    console.log(emailInfo.substring(qindex+1,eindex))
+    console.log(emailInfo.substring(eindex+1))
+    axios({
+      type:'get',
+      url:'http://127.0.0.1/garpro/user/checkEmail',
+      params:{
+        email:this.userEmail,
+        time:time
+      }
+    }).then(res=>{
+      if(res.data=="canRest"){
         console.log(res.data)
+      }else{
+        this.$router.replace({path:'/ForgetPwd'});
+      }
+    }).catch(res=>{
+      console.log(res.data)
+    })
+  },
+  methods:{
+    resetPwd:function(){
+      axios.post("http://127.0.0.1/garpro/user/resetPassword",
+        {
+          password:this.pwd,
+          email:this.userEmail,
+          time:this.time,
+        }).then(res=>{
+        console.log(res.data);
+        if(res.data=="resetSuc"){
+          this.$router.replace({path:'/login'});
+        }
       }).catch(res=>{
         console.log(error)
       })
