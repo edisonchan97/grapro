@@ -7,7 +7,6 @@
         <!-- <router-link class="up-head" to=""> -->
           <span class="input-group-addon glyphicon glyphicon-camera" id="">
             <img :src='picSrc' alt="" id="head-img">
-            <up-pic style="position:absolute"></up-pic>  
           </span>
           
         <!-- </router-link> -->
@@ -43,7 +42,6 @@
 
 <script>
 import Grapro from "../../components/LittleComponents/Grapro"
-import UpPic from "../../components/LittleComponents/UpPic"
 import axios from "axios"
 export default {
   name: 'Reg',
@@ -65,7 +63,7 @@ export default {
       }
     }
   },
-  components:{Grapro,UpPic},
+  components:{Grapro},
   methods:{
     reg:function(){
       axios({

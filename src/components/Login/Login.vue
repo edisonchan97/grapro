@@ -1,5 +1,5 @@
 <template>
-  <div class="login">
+  <div class="login"  style="overflow:auto">
   <!-- <img src="static/index-bg.jpg" alt="" id="index-bg"> -->
     <div class="container from-group">
       <h1 id="title">Welcome To Grapro</h1>
@@ -22,7 +22,7 @@
       <button type="button" class="btn btn-primary" id="login" @click="login" >登陆</button>
       <router-link to="Reg"><button type="button" class="btn btn-primary" id="reg">注册</button></router-link>
       <router-link to="ForgetPwd" id="lost-password">忘记密码?</router-link>
-      <a href="" id="change-account">更换账号登陆</a>
+      <!-- <a href="" id="change-account">更换账号登陆</a> -->
     </div>
     <grapro></grapro>  
   </div>
@@ -61,6 +61,7 @@ export default {
       }).then(res=>{//注册成功返回'loginsuc'
         console.log(res.data)
         if(res.data=="loginsuc"){
+          
           this.$router.push({path:'/'})//跳转页面
         }else{
           this.password = true;
@@ -100,16 +101,7 @@ export default {
     width: 100%;
     height: 100%;
   }
-  #login{
-    position: absolute;
-    left: 30%;
-    margin-top: 2rem;
-  }
-  #reg{
-    position: absolute;
-    left: 55%;
-    margin-top: 2rem;
-  }
+
   #head-sculpture{
     height: 10rem;
     width: 10rem;
@@ -124,18 +116,7 @@ export default {
     /*border-color: #888;*/
     color: #fff;
   }
-  #lost-password{
-    display: block;
-    position: absolute;
-    bottom: 10rem;
-    left: 40%;
-  }
-  #change-account{
-    display: block;
-    position: absolute;
-    bottom: 8rem;
-    left: 40%;
-  }
+
   #head-img{
     width: 100px;
     height:100px;
@@ -148,14 +129,14 @@ export default {
     #lost-password{
       display: block;
       position: absolute;
-      left: 45%;
-      bottom: 42%;
+      left: 47%;
+      bottom: 40%;
     }
     #change-account{
     display: block;
     position: absolute;
-    left: 45%;
-    bottom: 47%;
+    left: 46%;
+    bottom: 37%;
   }
   #login{
     position: absolute;
@@ -166,6 +147,31 @@ export default {
     position: absolute;
     left: 55%;
     margin-top: 2rem;
+  }
+}
+/*最大960px*/
+  @media screen and (max-width: 960px) {
+      #login{
+    position: absolute;
+    left: 30%;
+    margin-top: 2rem;
+  }
+  #reg{
+    position: absolute;
+    left: 55%;
+    margin-top: 2rem;
+  }
+  #lost-password{
+    display: block;
+    position: absolute;
+    bottom: 10rem;
+    left: 40%;
+  }
+  #change-account{
+    display: block;
+    position: absolute;
+    bottom: 8rem;
+    left: 40%;
   }
 }
 </style>
