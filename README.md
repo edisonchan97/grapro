@@ -37,4 +37,5 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 
 ## 基于图片分享的社交网站
 > GraduationProject
- 11.18 登陆 注册 
+ 前端:Vue-cli 处理页面显示与数据
+ 后端:PHP的ci框架 代码后期po出来 
