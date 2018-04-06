@@ -3,32 +3,28 @@
     <div style="background:#eee;padding: 5px" >
         <Card :bordered="false" >
           <div>
-            用户名
+           <router-link to="/">
+           <Avatar icon="person" size="large" style="background-color:#87d068"  :src="avatar" /> {{name}}
+           </router-link>
           </div>
           <hr>
           <div class="picCar">
             <Carousel dots="none">
-              <Carousel-item>
-                  <div class="demo-carousel"><img src="/static/4.jpg" alt=""></div>
+              <Carousel-item v-for="url in iUrl">
+                  <div class="demo-carousel"><img :src="url" alt=""></div>
               </Carousel-item>
-              <Carousel-item>
-                  <div class="demo-carousel"><img src="/static/logo-purple.png" alt=""></div>
-              </Carousel-item>
-              <Carousel-item>
-                  <div class="demo-carousel"><img src="/static/index-bg.jpg" alt=""></div>
-              </Carousel-item>
-              <Carousel-item>
-                  <div class="demo-carousel"><img src="/static/logo-purple.png" alt=""></div>
-              </Carousel-item>
-          </Carousel>
+            </Carousel>
+          <Tag type="dot"  color="red" v-for="t,index in type">{{t}}</Tag>
           </div>
           <hr>
+          <Row>
+              <i-col :xs="{ span: 10, offset: 14 }" :lg="{ span: 6, offset: 18 }" style="font-size:1rem;text-align:right">{{time.slice(0,16)}}</i-col>
+          </Row>
           <div>
           <Row>
-              <i-col span="24">woyao说以西会啊点卡收费哈克woyao说以西会啊点卡收费哈克woyao说以西会啊点卡收费哈克woyao说以西会啊点卡收费哈克</i-col>
+              <i-col span="24">{{dContent}}</i-col>
           </Row>
-          <Row>
-              
+          <Row>              
               <i-col span="2" offset="18" ><span v-bind:class="{ 'class-a': isA, 'class-b': !isA}" @click="toggle"><Icon type="heart" size="25"></Icon></span></i-col>
               <i-col span="2" offset="1" ><span @click="comment" v-bind:class="{ 'class-c': isA, 'class-d': !isA}"><Icon type="chatbubble-working" size="25" ></Icon></span></i-col>
           </Row>
@@ -46,6 +42,7 @@
 <script>
 export default {
   name: 'pictureContain',
+  props:["dContent","iUrl","time","type","name","avatar"],
   data () {
     return {
       listImg: [{

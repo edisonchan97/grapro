@@ -8,6 +8,7 @@ import Login from '@/components/Login/Login'
 import ForgetPwd from '@/components/Login/ForgetPwd'
 import ResetPwd from '@/components/Login/ResetPwd'
 import InputLogin from '@/components/LittleComponents/InputLogin'
+import SinglePic from '@/components/LittleComponents/SinglePic'
 import Grapro from '@/components/LittleComponents/Grapro'
 import Test from '@/components/LittleComponents/Test'
 import BgHead from '@/components/LittleComponents/BgHead'
@@ -19,6 +20,11 @@ import Home from '@/components/Swiper/Home'
 import Search from '@/components/Search/Search'
 import Publish from '@/components/Publish/Publish'
 import Dynamic from '@/components/Dynamic/Dynamic'
+import Admin from '@/components/Admin/AdminIndex'
+import UserManage from '@/components/Admin/UserManage'
+import ShowCount from '@/components/Admin/ShowCount'
+import HandleReport from '@/components/Admin/HandleReport'
+import PublishMessage from '@/components/Admin/PublishMessage'
 // import TopBar from '@/components/TopBar/TopBar'
 
 Vue.use(Router)
@@ -34,6 +40,21 @@ export default new Router({
       path: '/Reg',
       name: 'Reg',
       component: Reg
+    },
+    {
+      path:'/Admin',
+      redirect:'/Admin/ShowCount'
+    },
+    {
+      path: '/Admin',
+      name: 'Admin',
+      component: Admin,
+      children:[
+      {path:'/Admin/UserManage',component:UserManage},
+      {path:'/Admin/ShowCount',component:ShowCount},
+      {path:'/Admin/HandleReport',component:HandleReport},
+      {path:'/Admin/PublishMessage',component:PublishMessage}
+      ]
     },
     {
       path: '/Login',
@@ -62,9 +83,8 @@ export default new Router({
     },
     {
       path: '/Personal',
-      redirect:'/Personal/Show'
-    }
-    ,
+      redirect:'/Personal/Show/Dynamic'
+    },
     {
       path: '/Personal',
       name: 'Personal',
@@ -72,6 +92,16 @@ export default new Router({
       children:[
       {path:'/Personal/EditInfo',component:EditPersonalInfo},
       {path:'/Personal/Show',component:PersonalHomePage}
+      ]
+    },
+    {
+      path: '/Personal/Show',
+      component:PersonalHomePage,
+      name:'PersonShow',
+      children:[
+        {path:'/Personal/Show/Dynamic',component:SinglePic},
+        {path:'/Personal/Show/FollwerU',component:SinglePic},
+        {path:'/Personal/Show/UFollwer',component:SinglePic}
       ]
     },
     {

@@ -60,13 +60,26 @@ export default {
         }
       }).then(res=>{//注册成功返回'loginsuc'
         console.log(res.data)
-        if(res.data=="loginsuc"){
-          
+        if(res.data.login=="loginsuc"){
+          console.log("1")
+          this.$store.state.nickname = res.data.data[0].user_nickname;
+          this.$store.state.name = res.data.data[0].user_name;
+          this.$store.state.avatarUrl = res.data.data[0].user_avatar;
+          this.$store.state.introduce = res.data.data[0].user_introduce;
+          this.$store.state.user_id = res.data.data[0].user_id;
+          this.$store.state.sex = res.data.data[0].user_sex;
+          this.$store.state.phone = res.data.data[0].user_phone;
+          this.$store.state.address = res.data.data[0].user_address;
+          this.$store.state.email = res.data.data[0].user_email;
+          localStorage.setItem("u_name",this.$store.state.name); 
+          localStorage.setItem("u_id",this.$store.state.user_id); 
           this.$router.push({path:'/'})//跳转页面
+
         }else{
+          this.$Message.info("用户名或密码错误，请重新登录")
           this.password = true;
           this.pwd ="";
-          this.password = false;
+          this.password = false;          
           return;
         }
       }).catch(res=>{

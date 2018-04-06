@@ -18,6 +18,11 @@
         <i-button type="success" @click="subImage">确认提交</i-button>
         <i-button type="error" @click="gary">灰度</i-button>
     </form>
+    <Row >
+        <Tag type="border" color="red" closable v-for="l,index in type" :typeIdx="index" @on-close="handleClose(index)">{{l}}</Tag>
+        <Button icon="ios-plus-empty" type="dashed" size="small"  @click="handleRender">添加标签</Button>
+
+    </Row> 
     <div class="modalImg">
         <div style="width:80%;padding:0 10%;margin:0"></div>
     </div>
@@ -47,7 +52,9 @@ import $ from 'jquery'
                 imgName:"",
                 file:[],
                 modalView:false,
-                imgDesc:""
+                imgDesc:"",
+                type:["美人","美景","美物"],
+                value:""
             }
         },
         computed: {
@@ -63,7 +70,11 @@ components:{IndexFooter,IndexHeader},
                         return;
                     }else{
                         for(let i = 0;i<files.length;i++){
+                            if(files[i].size>2097152){
+                                this.$Message.info("图片最大2M");return;
+                            }
                             this.createImage(files[i]);
+
                         this.form.append("image["+(this.image.length+i)+"]",files[i])
                         }
                         
@@ -106,11 +117,20 @@ components:{IndexFooter,IndexHeader},
                 this.imgName = this.image[id]
             },
             subImage:function(){
+                    let flag=false;
                 this.form.set("imgDesc",this.imgDesc)
+                this.form.set("u_id",localStorage.getItem("u_name"))
                 for(var form of this.form.entries()){
                     console.log(form[0],form[1])
+                    if(form[0]=="image[0]"){
+                        flag =true;
+                    }
                 }
-                // return
+                if(flag){
+                    let timestamp=new Date().getTime()
+                let type=this.type.join("|") +"|"
+                this.form.set("time",timestamp)
+                this.form.set("type",type)
                 axios({
                     method:'post',
                     url:'http://127.0.0.1/garpro/Upload/uploadFile',
@@ -120,13 +140,55 @@ components:{IndexFooter,IndexHeader},
                     data:this.form
                   }).then(res=>{//
                     console.log(res.data)
+                    if(res.data == true){
+                        this.$Message.info("发布成功");
+                        this.$router.push({path:"/"})
+                    }
                   }).catch(res=>{
                     console.log(error)
                   })
+              }else{
+                this.$Message.info("请上传图片")
+                return;
+              }
+                
             },
             gary:function(){
                 $(".imgArr").grayImg(100);
                 this.form.set("style","filter: grayscale(100%);")
+            },
+            handleClose:function(e){
+                console.log(e);
+                this.type.splice(e,1);
+                console.log(this.type)
+            },
+            handleRender () {
+                this.$Modal.confirm({
+                    render: (h) => {
+                        return h('Input', {
+                            props: {
+                                value: this.value,
+                                autofocus: true,
+                                placeholder: 'Please enter your type...'
+                            },
+                            on: {
+                                input: (val) => {
+                                    this.value = val;
+                                }
+                            }
+                        })
+                    },
+                    onOk:()=>{
+                        if(this.value.indexOf("|")>-1){
+                            this.$Message.info("请勿输入非法字符");
+                            return;
+                        }else{
+                            this.type.push(this.value);
+                        console.log(this.type)
+                        }
+                        
+                    }
+                })
             }
         },mounted:function(){
 
@@ -144,5 +206,14 @@ components:{IndexFooter,IndexHeader},
         /*display: none;*/
         position: fixed;
         background: #f7f7f9;
+    }
+    .labelType{
+        padding: 5px 10px;
+        background: #563729;
+        max-width: 10rem;
+        border-radius: 10px;
+        margin: 5px;
+        color: #fff;
+        /*width: 2rem;*/
     }
 </style>

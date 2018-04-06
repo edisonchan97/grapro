@@ -1,7 +1,21 @@
 <template>
   <div class="editPersonalInfo">
 	  <div class="personal-home-page">
-	      <div class="headerNav"><h3 style="margin-top:10px;">编辑信息</h3></div>
+	      <div class="headerNav">
+        <Row>
+          <Col span="4"offset="1" >
+          <Button type="ghost" style="margin-top:10px;">
+            <router-link to="/Personal/Show">
+             <Icon type="chevron-left"></Icon>
+              Back
+            </router-link>
+          </Button>
+        </Col>
+          <Col span="13"offset="1" >
+            <h3 style="margin-top:10px;display:inline-block">编辑信息</h3>
+          </Col>
+        </Row> 
+        </div>
 	      <Row class="marginHead">
 	      	 <Col span="7"offset="1" >
 	      	 	<div class="avatar">
@@ -21,7 +35,7 @@
 	    </Row>
 	    <Row>
 	        <Col span="10"offset="1" ><label class-name="label">账号</label></Col>
-	        <Col span="20" offset="1"><Input v-model="username" placeholder="Enter something..." style="width: 100%"></Input></Col>
+	        <Col span="20" offset="1"><Input v-model="username" disabled placeholder="Enter something..." style="width: 100%"></Input></Col>
 	    </Row>
 	    <Row>
 	        <Col span="10"offset="1" ><label class-name="label">地区</label></Col>
@@ -65,14 +79,15 @@ export default {
   name: 'EditPersonalInfo',
   data () {
     return {
-      name:"edisonzhuozhou",
-      username:"",
-      phone:"",
-      email:"",
-      ownDesc:"",
-      address:"",
-      sex:"",
-      avatar:"http://127.0.0.1/uploads/zz.jpg",
+      name:this.$store.state.nickname,
+      username:this.$store.state.name,
+      phone:this.$store.state.phone,
+      email:this.$store.state.email,
+      ownDesc:this.$store.state.introduce,
+      address:this.$store.state.address,
+      sex:this.$store.state.sex,
+      avatar:this.$store.state.avatarUrl,
+      avatarAds:"",
       gender: [
                 {
                     value: 'male',
@@ -106,17 +121,18 @@ export default {
                 this.createImage(files[0]);
             	this.form.set("avatarPic",files[0])
             	axios({
-			        method:'post',
-			        url:'http://127.0.0.1/garpro/user/changeAvatar',
-			        processData:false,
-			        contentType:false,
-			        // headers:{"Content-Type":"text/plain;charset=utf-8"},
-			        data:this.form
-			      }).then(res=>{//
-			        this.avatar = JSON.parse(res.data).url;
-			      }).catch(res=>{
-			        console.log(error)
-			      })
+  			        method:'post',
+  			        url:'http://127.0.0.1/garpro/user/changeAvatar',
+  			        processData:false,
+  			        contentType:false,
+  			        // headers:{"Content-Type":"text/plain;charset=utf-8"},
+  			        data:this.form
+  			      }).then(res=>{//
+  			        this.avatar = res.data.url;
+                // this.avatarAds = this.avatar;
+  			      }).catch(res=>{
+  			        console.log(error)
+  			      })
             }
         },
     createImage(file){
@@ -137,6 +153,7 @@ export default {
     	this.form.set("name",this.name);
     	this.form.set("avatarUrl",this.avatar);
     	this.form.set("address",this.address);
+      this.form.set("u_id",localStorage.getItem("u_id"))
     	axios({
 	        method:'post',
 	        url:'http://127.0.0.1/garpro/user/editInfo',
@@ -145,9 +162,26 @@ export default {
 	        // headers:{"Content-Type":"text/plain;charset=utf-8"},
 	        data:this.form
 	      }).then(res=>{//
-	        console.log(res.data)
+	        if(res.data==true){
+            this.$store.state.nickname = this.name;
+            this.$store.state.name = this.username;
+            this.$store.state.avatarUrl = this.avatar;
+            this.$store.state.introduce = this.ownDesc;
+            // this.$store.state.user_id = res.data.data[0].user_id;
+            this.$store.state.sex = this.sex;
+            this.$store.state.phone = this.phone;
+            this.$store.state.address = this.address;
+            this.$store.state.email = this.email;
+            // localStorage.setItem("u_name",this.$store.state.name); 
+            this.$Message.info("修改成功");
+
+            this.$router.push({path:"/Personal/Show"})
+          }else{
+
+          }
 	      }).catch(res=>{
 	        console.log(error)
+          this.$Message.info("修改失败")
 	      })
     }
   }

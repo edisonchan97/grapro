@@ -8,8 +8,8 @@
 		</span>
     </i-col>
     <!-- <i-col span><Icon type="android-arrow-forward"></Icon> -->
-	</Row>	
-	<Row>	
+	</Row>
+	<Row>
 		<Menu mode="horizontal"  active-key="1">
 	        <i-col :lg="{span:4, offset:4}" :xs="{ span: 8 }" class="search-type">
 	        <Menu-item key="1" name="1">
@@ -32,14 +32,14 @@
 	    </Menu>
 	</Row>
 	<Picture-contain></Picture-contain>
-	<!-- 	
+	<!--
 	<div class="overNine" v-if="nine">
 		dayu
 	</div>
 	<div class="shortNine" v-else>
-		xiaoyu 
+		xiaoyu
 	</div> -->
-	
+
     <Index-footer active-key="2"></Index-footer>
 	</div>
 
@@ -52,7 +52,7 @@ export default {
   name: 'Search-Page',
   data () {
     return {
-      nine: window.screen.width > 960 ? true : false 
+      nine: window.screen.width > 960 ? true : false
     }
   },components:{IndexFooter,IndexHeader,PictureContain},
   methods:{
